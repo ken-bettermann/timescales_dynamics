@@ -85,7 +85,7 @@ print(S.period)   # common period of T1 and T2
 Time scales may also depend on parameters by passing a function, allowing for adjustable underlying time.
 
 ```python
-S = AsynchSystem(lambda mu: [0, mu, 3*mu], lambda nu: [0, nu], F, G,
+S = AsynchSystem(lambda mu: [0, mu], lambda nu: [0, nu], F, G,
                  params={'mu': 1, 'nu': 2, 'r': 1.0})
 ```
 
@@ -121,14 +121,33 @@ for fp in fps:
 
 ### 4. Bifurcation diagram in one parameter
 
-```python
-import numpy as np
-from stability import bifurcation_1param, plot_bif1param
+Consider alternative systems to demonstrate bifurcations in one parameter. `bifurcation_1param` can vary a parameter defined in the `F` and `G` equations as follows: 
 
-recs = bifurcation_1param(S, 'r', np.linspace(0.5, 4.5, 200),
-                          bounds=((-5, 5), (-5, 5)), n=5)
-plot_bif1param(recs, 'r', coordinate=1)   # red = stable, blue = unstable
+```python
+F = lambda x, y, r: r - x**2
+G = lambda x, y: x - y
+
+S = AsynchSystem([0,1], [0,1], F, G, params={'r':1.0})
+recs = bifurcation_1param(S, 'r', np.linspace(-0.5, 1.5, 500), bounds=((-10,10),(-10,10)), n=5)
+plot_bif1param(recs, 'r', 2)
 ```
+
+![Alt Text](images/bifurcation.png "Bifurcation in equation parameter")
+
+A bifurcation parameter may also lie in the underlying timescale, in which case the parameter values must be defined carefully to ensure commensurability of timescales during a sweep. The following shows a bifurcation in a timescale parameter over a linear system.
+
+```python
+from fractions import Fraction
+nus = [Fraction(k,20) for k in range(2,121)]
+
+linearF = lambda x, y, alpha, beta: alpha*x + beta*y
+linearG = lambda x, y, gamma, delta: gamma*x + delta*y
+S = AsynchSystem(lambda mu: [0,mu], lambda nu: [0,nu], linearF, linearG, params=dict(mu=1, nu=1, alpha=0.5, beta=0.3, gamma=0.2, delta=0.3))
+recs = bifurcation_1param(S, 'nu', nus)
+plot_bif1param(recs, 'nu', 1)
+```
+
+![Alt Text](images/timescale_bifurcation.png "Bifurcation in timescale parameter")
 
 ### 5. Linear systems
 
@@ -136,7 +155,7 @@ plot_bif1param(recs, 'r', coordinate=1)   # red = stable, blue = unstable
 S = AsynchSystem.linear([0, 2], [0, 3], alpha=-0.5, beta=0.3, gamma=0.2, delta=-0.3)
 ```
 
-For linear systems the origin is the fixed point, and `stability(S)` reproduces Siegmund's criterion.
+This is a quicker way to define the classical Siegmund system.
 
 ### Commensurable time scales
 
