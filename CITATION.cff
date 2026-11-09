@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: "timescales_dynamics"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: "Bettermann"
+    given-names: "Kenneth"
+version: "1.0.0"
+date-released: "2026-11-6"
+url: "https://github.com/ken-bettermann/timescales_dynamics"
