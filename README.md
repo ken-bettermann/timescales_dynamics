@@ -11,10 +11,10 @@ This code is based on the linear system posed by Dr. Stefan Siegmund and Dr. Pet
 Many models contain components that do not update at the same moment: a continuously reproducing host and a seasonally reproducing vector, processors in a distributed algorithm, or components in a control loop with delayed data transfer. This project studies systems of the form
 
 $$
-x^{\Delta}(t) = F\big(x(t),\, y(t^{*})\big), \qquad t \in T_1
+x^{\Delta}(t) = F\big(x(t), y(t*)\big), \qquad t \in T_1
 $$
 $$
-y^{\Delta}(t) = G\big(x(t^{*}),\, y(t)\big), \qquad t \in T_2
+y^{\Delta}(t) = G\big(x(t*), y(t)\big), \qquad t \in T_2
 $$
 
 where `T1` and `T2` are periodic isolated time scales and `t*` denotes the most recent update time of the *other* variable (sample-and-hold). Concretely, at each time in `T1`, `x` takes a forward-Euler step of length `μ(t)` (the graininess function in `T1`) using the last known value of `y`; `y` is handled the same way on `T2` using graininess function `ν(t)`.
