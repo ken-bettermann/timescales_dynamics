@@ -100,7 +100,13 @@ plot(y, E2, xname='y')
 plot2D(x, y, E1, E2)       # phase portrait (sample-and-hold)
 ```
 
-`S.periodic_map([x0, y0], numsteps=1)` returns the state after one (or more if numsteps!=1) common periods.
+`S.periodic_map([x0, y0], numsteps=1)` returns the state after one (or more if numsteps!=1) common periods. The results of the plotting are, respectively,
+
+![Alt Text](images/S_xvsT1.png "x plotted on its timescale")
+
+![Alt Text](images/S_yvsT2.png "y plotted on its timescale")
+
+![Alt Text](images/S_xvsy.png "x and y plotted with sample-and-hold")
 
 ### 3. Find fixed points and test stability
 
