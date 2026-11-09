@@ -8,7 +8,7 @@ import numpy as np
 from scipy.differentiate import jacobian
 from scipy.optimize import root
 from timescale import extended_times
-from system import AsynchSystem
+from system import AsynchSystem, plot, plot2D
 import matplotlib.pyplot as plt
 
 @dataclass
@@ -136,28 +136,3 @@ def plot_bif1param(records, par_name, coordinate):
     plt.legend()
     plt.show()
     return
-    
-F = lambda x, y, r: r - x - x**3 - 3*y
-G = lambda x, y: 0.5 * (x - y)
-S = AsynchSystem([0, 1], [0, 1], F, G, params={'r': 1.0})
-recs = bifurcation_1param(S, 'r', np.linspace(0.5, 4.5, 500), bounds=((-5, 5), (-5, 5)), n=5)
-plot_bif1param(recs, 'r', 1)
-
-F = lambda x, y, r: r - x**2
-G = lambda x, y: x - y
-
-S = AsynchSystem([0, 1], [0, 1], F, G, params={'r': 1.0})
-recs = bifurcation_1param(S, 'r', np.linspace(-0.5, 1.5, 500), bounds=((-10, 10), (-10, 10)), n=5)
-plot_bif1param(recs, 'r', 2)
-
-from fractions import Fraction
-
-linearF = lambda x, y, alpha=0, beta=0: alpha*x + beta*y
-linearG = lambda x, y, gamma=0, delta=0: gamma*x + delta*y
-
-S = AsynchSystem(lambda mu: [0, mu], lambda nu: [0, nu], linearF, linearG,
-                 params=dict(mu=1, nu=1, alpha=-0.5, beta=0.3, gamma=0.2, delta=-0.3))
-
-nus = [Fraction(k, 50) for k in range(4, 300)] # note that we need commensurability so this is weird.
-recs = bifurcation_1param(S, 'nu', nus)
-plot_bif1param(recs, 'nu', 1)

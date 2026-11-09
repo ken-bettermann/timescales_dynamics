@@ -107,8 +107,3 @@ def build_timing(T1,T2):
 def entire_period_timing(T1,T2):
     E1, E2 = extended_times(T1,T2)
     return build_timing(E1,E2)
-
-#T1 = [0,1,5]
-#T2 = [0,6]
-#timing = entire_period_timing(T1,T2)
-#print(timing.events)

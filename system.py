@@ -4,12 +4,8 @@
 """
 
 import inspect
-import math
 from dataclasses import dataclass
-import numpy as np
-from timescale import validate_scale,common_period,extendtime,extended_times,entire_period_timing, build_timing
-from scipy.optimize import root
-from scipy.differentiate import jacobian
+from timescale import common_period,extended_times,entire_period_timing, build_timing
 import matplotlib.pyplot as plt
 
 def filter_params(fun, params):
@@ -141,33 +137,3 @@ class AsynchSystem:
             raise Exception("Aw shucks! Something's wrong here (probably Nans)")
     def FG(self, x, y):
         return self.F(x,y), self.G(x,y)
-    
-    
-        
-            
-            
-F = lambda x, y: math.cos(x) - math.sin(y)
-G = lambda x, y: math.sin(y) - math.cos(y)
-S = AsynchSystem([0,1], [0,5.5], F, G, name='test_system')
-print(S.name)
-print(S.period)
-x, y, E1, E2 = S.simulate(0, 0, 5)
-plot(x,E1)
-plot(y,E2)
-plot2D(x, y, E1, E2)
-
-#linsystemtest = AsynchSystem.linear([0,1], [0,1], 0, 0, 0, 0)
-#linsystem2 = linsystemtest.replace(beta=1, alpha = 10, gamma=1, delta=4)
-#print(linsystem2.simulate(1, 1, 2))
-#print(linsystem2.__repr__())
-#print(linsystem2.periodic_map([1,1]))
-
-#fun = lambda x, y, r : r*x*(1-y)
-#params = {"r":10}
-#func = fun_wrapper(fun,params)
-#print(func(1,0))
-
-#F = lambda x,y: x*y + x
-#G = lambda x,y: (x-y)/3
-#nonlineartest = AsynchSystem([0,2], [0,3], F, G)
-
