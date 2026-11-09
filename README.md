@@ -70,7 +70,7 @@ No package install is needed. Keep the three `.py` files in the same folder.
 
 ### 1. Defineing a system
 
-A time scale is given as **one period** of strictly increasing points, and both scales must start at the same time. `F` and `G` take `(x, y)` plus optional keyword parameters, which are picked up by name from `params`.
+A time scale is given as **one period** of strictly increasing points, and both scales must start at the same time. `F` and `G` take `(x, y)` plus optional keyword parameters, which are picked up by name from `params`. An example of a time scale is T = [0, 2, 5], which corresponds to [0, 2, 5, 7, 10, 12, 15, 17, 20, ...]
 
 ```python
 from system import AsynchSystem
